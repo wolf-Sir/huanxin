@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+    <link rel="stylesheet" href="../css/layui.css">
+     <link rel="stylesheet" href="../css/modules/layer/default/layer.css">
+     <link rel="stylesheet" href="../css/common.css">
+</head>
+</head>
+<body id="login_box">
+   <div id="app">
+      <!--登录-->
+       <transition name="fade">
+      <div class="login" v-show = "isLogin">
+        <div class="login_title">登 &nbsp;&nbsp;&nbsp;录</div>
+        <form class="layui-form layui-form-pane" action="javascript:void(0);">
+       <div class="layui-form-item">
+          <label class="layui-form-label">账号:</label>
+          <div class="layui-input-block">
+            <input type="text" name="user" value="webchenhan163com" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+         <div class="layui-form-item">
+          <label class="layui-form-label">密码:</label>
+          <div class="layui-input-block">
+            <input type="password" name="pwd" value="123456" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <div class="text_right">
+            <button class="layui-btn" lay-submit lay-filter="login" @click="commit_login">登录</button>
+            <button type="button" class="layui-btn layui-btn-primary" @click="isLogin=false">马上注册</button>
+            </div>
+          </div>
+        </div>
+        </form> 
+      </div>
+      </transition>
+      <transition name="fade">
+      <!--注册--> 
+      <div class="register" v-show = "!isLogin">
+         <div class="login_title">注 &nbsp;&nbsp;&nbsp;册</div>
+        <form class="layui-form layui-form-pane" action="javascript:void(0);">
+         <div class="layui-form-item">
+          <label class="layui-form-label">昵称:</label>
+          <div class="layui-input-block">
+            <input type="text" name="nickname" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          </div>
+         </div>
+         <div class="layui-form-item">
+          <label class="layui-form-label">账号:</label>
+          <div class="layui-input-block">
+            <input type="text" name="username" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+         <div class="layui-form-item">
+          <label class="layui-form-label">密码:</label>
+          <div class="layui-input-block">
+            <input type="password" name="password" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <div class="text_right">
+           
+            <button type="button" lay-submit lay-filter="register" class="layui-btn layui-btn-primary" @click="commit_register">注册</button>
+             <button type="button" class="layui-btn"  @click="isLogin=true">返回登录</button>
+            </div>
+          </div>
+        </div>
+        </form> 
+      </div>
+       </transition>
+   </div>
+
+    <!--引入四个 js文件-->
+    <script src="../js/plugins/sea.js"></script>
+    <script src="../js/plugins/strophe-1.2.8.min.js"></script>
+    <script src="../js/plugins/webim.config.js"></script>
+    <script src="../js/plugins/websdk-1.4.13.js"></script>
+    <script src="../js/ui/login.js"></script>
+    <script>
+      seajs.use("../js/ui/login.js");
+    </script>
+</body>
+</html>

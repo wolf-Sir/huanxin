@@ -1,0 +1,93 @@
+
+@p_l:10px;
+.main_content {
+  
+  width: 272px;
+  height: 600px;
+  background-image: url(../images/3.jpg);
+  background-repeat: no-repeat;
+  color: #333;
+  font-family: \5FAE\8F6F\96C5\9ED1;
+  position:relative;
+  margin:auto;
+  * {
+      box-sizing: border-box;
+    }
+
+  & .one_you_box{
+     background-color: rgba(255,255,255,.9);
+     min-height:400px;
+  }
+ & .lt_title{
+  width:100%;
+  height:60px;
+  padding:0 @p_l ;
+  & .top_title{
+       padding-bottom:10px;
+        & .close{
+           float:right;
+           &:hover{
+              color:red;
+              cursor: pointer;
+             }
+       }
+        & .line_state{
+          padding-left:10px;
+        }
+     }
+  
+ } 
+}
+//首页 start
+.index{
+  background: url("../images/2zrdI1g.jpg");
+}
+//首页 end
+//登录 start
+#login_box {
+  position:relative;
+  .login_title{
+    font-size:18px;
+    padding:20px 20px 20px 260px;
+  }
+  .register,.login{
+     position:absolute;
+     width:100%;
+  }
+
+}
+//登录 end
+
+//覆盖样式
+.layui-tab-title li{
+  min-width:90px;
+}
+.layui-layer-title{
+   height:10px;
+   background-color:#D6D6D6;
+   border:none;
+}
+body .login_box {
+  padding: 0 10px 10px 10px;
+  background-color:rgba(255,255,255,0.58);;
+  & .layui-layer-title{
+      height:10px;
+     border:none;
+  }
+}
+//公共样式
+.text_center{
+  text-align: center;
+}
+.text_right{
+  text-align: right;
+}
+.text_left{
+  text-align: left;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .75s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+  opacity: 0
+}

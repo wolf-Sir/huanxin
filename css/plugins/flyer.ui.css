@@ -1,0 +1,797 @@
+/***
+*@Name: fiyer v0.5 寮瑰眰缁勪欢
+*@Author: Ken (閮戦箯椋�)
+*@Site : http://www.15ae.com
+*@License锛歀GPL
+***/
+
+* {
+    /*font-size: 14px;
+    color: #424242;*/
+    font-family: 'Microsoft YaHei';
+    margin: 0px;
+    padding: 0px;
+    pointer-events: auto;
+}
+
+
+/*
+閬僵缃㈢殑鏍峰紡
+*/
+
+.flyer-shade {
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background-color: #424242;
+    z-index: 9999999;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    position: fixed;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+}
+
+.flyer-shade-loadding {
+    width: 220px;
+    height: 150px;
+    position: fixed;
+    top: 40%;
+    background: rgba(255, 255, 255, 1);
+    left: 45%;
+    border-radius: 4px;
+}
+
+.flyer-shade-loadding img {
+    display: block;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+
+/*
+鎸夐挳鏍峰紡锛岃繖閲岀敤浜庢墍鏈�
+*/
+
+.flyer-button {
+    display: inline-block;
+    overflow: hidden;
+    background-color: #4AB8F9;
+    line-height: 25px;
+    color: #fafafa;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #ccc;
+    text-shadow: 1px 1px 0px #000;
+    padding: 3px 20px 3px 20px;
+    vertical-align: top;
+    border: 0px;
+    outline: 0px;
+}
+
+.flyer-button:hover {
+    background-color: #000000;
+    color: #fff;
+}
+
+
+/*
+寮瑰嚭妗嗗鍣ㄦ牱寮�
+*/
+
+.flyer-dialog-container {
+    border-radius: 3px;
+    background-color: #ffffff;
+    border: 1px solid #eeeeee;
+    z-index: 100000000;
+    position: fixed;
+    min-width: 300px;
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+}
+
+
+/*
+寮瑰嚭妗嗗鏍囬鏍峰紡
+*/
+
+.flyer-dialog-title {
+    line-height: 36px;
+    background-color: #f8f8f8;
+    border-radius: 3px 3px 0px 0px;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 14px;
+    color: #000;
+    padding: 0px 60px 0px 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/*
+寮瑰嚭妗嗙殑鍔ㄧ敾鍏煎IE锛屽脊鍑�
+*/
+
+@keyframes popup {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -ms-transform: scale(.5);
+        transform: scale(.5)
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1)
+    }
+}
+
+
+/*
+寮瑰嚭妗嗙殑鍔ㄧ敾鍏煎Chrome鍜孲afair,寮瑰嚭
+*/
+
+@-webkit-keyframes popup {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(.5);
+        -ms-transform: scale(.5);
+        transform: scale(.5)
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1)
+    }
+}
+
+
+/*
+寮瑰嚭妗嗙殑鍔ㄧ敾鍏煎Chrome鍜孲afair,鍏抽棴
+*/
+
+@-webkit-keyframes close {
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(.7);
+        transform: scale(.7)
+    }
+    30% {
+        -webkit-transform: scale(1.03);
+        transform: scale(1.03)
+    }
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+
+/*
+寮瑰嚭妗嗙殑鍔ㄧ敾鍏煎IE锛屽叧闂�
+*/
+
+@keyframes close {
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(.7);
+        -ms-transform: scale(.7);
+        transform: scale(.7)
+    }
+    30% {
+        -webkit-transform: scale(1.03);
+        -ms-transform: scale(1.03);
+        transform: scale(1.03)
+    }
+    0% {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1)
+    }
+}
+
+
+/*
+鐢ㄤ簬绠＄悊寮规鍔ㄧ敾寮瑰嚭
+*/
+
+.flyer-anim {
+    -webkit-animation-name: popup;
+    animation-name: popup
+}
+
+
+/*
+鐢ㄤ簬绠＄悊寮规鐨勫唴瀹归潰鏉�
+*/
+
+.flyer-dialog-body {
+    padding: 20px;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+.flyer-dialog-body>iframe {
+    margin: 0px;
+    padding: 0px;
+    /* border: 1px solid red; */
+    position: absolute;
+    left: -1px;
+    top: 50px;
+    bottom: 0px;
+    right: 0px;
+}
+
+
+/*
+鐢ㄤ簬绠＄悊寮规鐨勫簳閮ㄩ潰鏉�
+*/
+
+.flyer-dialog-footer {
+    text-align: right;
+}
+
+
+/*
+鐢ㄤ簬绠＄悊寮规鐨勫簳閮ㄦ寜閽牱寮�
+*/
+
+.flyer-dialog-btn {
+    margin-right: 20px;
+    margin-bottom: 15px;
+    pointer-events: auto;
+}
+
+
+/*
+鐢ㄤ簬绠＄悊寮规鐨勫叧闂寜閽潰鏉�
+*/
+
+.flyer-dialog-setwin {
+    position: absolute;
+    min-width: 26px;
+    min-height: 16px;
+    top: 10px;
+    right: 15px;
+    text-align: right;
+    cursor: pointer;
+}
+
+.flyer-dialog-setwin>a {
+    background-image: url("../imgs/icon.png");
+    min-width: 16px;
+    min-height: 16px;
+    display: inline-block;
+}
+
+
+/*
+寮规鐨勫叧闂浘鏍囨牱寮�
+*/
+
+.flyer-dialog-close {
+    background-position: 0 -40px;
+    cursor: pointer;
+}
+
+/*
+寮规绉诲姩鏃剁殑鍓湰鏍峰紡
+*/
+
+.flyer-dialog-move {
+    border: 3px solid rgba(0, 0, 0, 0.3);
+    border: 3px solid #000;
+    background-color: #ccc;
+    border-radius: 3px;
+    z-index: 100000001;
+    position: absolute;
+    cursor: move;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+}
+
+
+/*寮规鍥炬爣鏍峰紡*/
+
+.flyer-dialog-icon {
+    background-image: url("imgs/icon.png");
+    min-width: 30px;
+    min-height: 32px;
+    display: inline-block;
+    position: absolute;
+}
+
+.flyer-dialog-icon-success {
+    background-position: -30px 62px;
+}
+
+.flyer-dialog-icon-warn {
+    background-position: 0px 62px;
+}
+
+.flyer-dialog-icon-error {
+    background-position: -60px 62px;
+}
+
+.flyer-dialog-icon-question {
+    background-position: -90px 62px;
+}
+
+.flyer-dialog-icon-smile {
+    background-position: -120px 62px;
+}
+
+.flyer-dialog-icon-weeping {
+    background-position: -150px 62px;
+}
+
+
+/*寮规鏃跺鏋滃甫鍥炬爣灏辫寮曠敤杩欎釜鏍峰紡鍖呰捣鏉ワ紝澶у鐢ㄥ湪淇℃伅妗�*/
+
+.flyer-dialog-padding {
+    padding-left: 40px;
+    padding-top: 5px;
+}
+
+.flyer-dialog-input {
+    width: 98%;
+    margin: 0px auto;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1) inset;
+    color: #333;
+    line-height: 30px;
+    height: 30px;
+    padding-left: 5px;
+}
+
+.flyer-dialog-textarea {
+    width: 300px;
+    margin: 0px auto;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1) inset;
+    color: #333;
+    line-height: 24px;
+    height: 120px;
+    padding-left: 5px;
+    overflow: auto;
+}
+
+
+/*tip鏍峰紡*/
+
+
+/*涓婄澶�*/
+
+.flyer-tips-up {
+    border-color: transparent #5692CD transparent transparent;
+    border-style: solid;
+    border-width: 10px 10px 10px 0px;
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: -8px;
+}
+
+.flyer-tips-right {
+    border-color: transparent transparent #5692CD transparent;
+    border-style: solid;
+    border-width: 10px 10px 10px 10px;
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: -8px;
+    top: 0px;
+}
+
+.flyer-tips-left {
+    border-color: transparent transparent #5692CD transparent;
+    border-style: solid;
+    border-width: 10px 10px 10px 10px;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0px;
+    right: -8px;
+    z-index: 1;
+}
+
+.flyer-tips-down {
+    border-color: transparent #5692CD transparent transparent;
+    border-style: solid;
+    border-width: 10px 10px 10px 10px;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: -8px;
+}
+
+
+/*鍐呭*/
+
+.flyer-tips-content {
+    color: #f8f8f8;
+    font-size: 12px;
+    line-height: 22px;
+    border-radius: 2px;
+    padding: 10px;
+    position: relative;
+    max-width: 600px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-button:vertical {
+    display: none;
+}
+
+::-webkit-scrollbar-track:vertical {
+    background-color: black;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    margin-right: 10px;
+    background-color: #A6A6A6;
+}
+
+::-webkit-scrollbar-thumb:vertical:hover {
+    background-color: #aaa;
+}
+
+::-webkit-scrollbar-corner:vertical {
+    background-color: #535353;
+}
+
+::-webkit-scrollbar-resizer:vertical {
+    background-color: #FF6E00;
+}
+
+
+/*
+comboBox缁勪欢鏍峰紡寮�濮�
+姝ゆ牱寮忚拷鍔犱簬2016/03/24
+*/
+
+.flyer-combobox-wrapper {
+    position: absolute;
+    background-color: #fff;
+    top: 5px;
+    left: 0px;
+}
+
+.flyer-combobox-ibox {
+    min-width: 200px;
+    max-width: 200px;
+    position: relative;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid #d2d2d2;
+}
+
+.disabled .flyer-combobox-icontent,
+.disabled .flyer-combobox-btn {
+    cursor: not-allowed;
+    opacity: .8;
+    background-color: #eee !important;
+}
+
+.flyer-combobox-icontent {
+    width: 100%;
+    margin-right: 28px;
+    line-height: 34px;
+    height: 34px;
+    min-height: 28px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.flyer-combobox-icontent span {
+    display: inline-block;
+    padding: 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    width: 178px;
+}
+
+.flyer-combobox-icontent span.placeholder {
+    color: #CCCFD0;
+}
+
+.flyer-combobox-btn {
+     height: 34px;
+    width: 28px;
+    overflow: hidden;
+    right: 0px;
+    top: 0px;
+    z-index: 3;
+    position: absolute;
+    outline: 0px;
+    border: 0px;
+    cursor: pointer;
+   /*display: none;*/
+}
+
+.flyer-combobox-btn-arrows {
+    /*border-color: #676A6C transparent transparent transparent;
+    border-style: solid;
+    border-width: 6px 6px 6px 6px;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 12px;
+    left: 8px;*/
+        display: inline-block;
+        position: absolute;
+	/*------ 实际使用时视觉上该图标稍微偏上，这里做修正yb ------*/
+   top: 9px;
+    left: 8px;
+    border-right: 1px solid #8d8d8d;
+            border-top: 1px solid #8d8d8d;
+            height: 9px;
+            width: 9px;
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+            border-left: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+}
+.flyer-combobox-items {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: 101%;
+    z-index: 99;
+    margin-left: -1px;
+    border-top: 0px;
+    max-height: 216px;
+    overflow-y: auto;
+    box-shadow: 0px 6px 12px 5px #ccc;
+    border-radius: 4px;
+    margin-top: 6px;
+}
+
+.flyer-combobox-items:after {
+    content: "";
+    clear: both;
+}
+
+.flyer-combobox-items input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.flyer-combobox-wrapper .show .flyer-combobox-items {
+    display: block;
+}
+
+.flyer-combobox-wrapper .show .flyer-combobox-icontent {
+    border-bottom: 1px solid #eee;
+}
+
+.flyer-combobox-items>ul>li {
+    width: 100%;
+    font-size: 14px;
+    cursor: pointer;
+    min-height: 36px;
+    line-height: 36px;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+
+.flyer-combobox-items>ul>li .disabled {
+    color: #eee;
+    cursor: not-allowed;
+}
+
+.flyer-combobox-items>ul>li input[type='text'] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 1px 0;
+    padding: 4px 20px 4px 5px;
+    margin-top: 5px;
+    width: 100%;
+    height: auto;
+    outline: 0;
+    border: 1px solid #eee;
+    border-width: 1px 0px 1px 0px;
+    background: white url('imgs/chosen-sprite.png') no-repeat 100% -20px;
+    background: url('imgs/chosen-sprite.png') no-repeat 100% -20px;
+    font-size: 1em;
+    font-family: sans-serif;
+    line-height: normal;
+    border-radius: 0;
+}
+
+.flyer-combobox-items>ul>li:hover {
+    background-color: #2cc3a9;
+    color: #fff;
+}
+
+.flyer-combobox-clear-btn {
+    position: absolute;
+    z-index: 2;
+    top: 5px;
+    right: 33px;
+    cursor: pointer;
+    background-color: #fff;
+    outline: 0px;
+    border: 0px;
+    display: block;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.flyer-combobox-clear-btn:hover {
+    background-color: #4ab8f9;
+    color: #fff;
+}
+
+.flyer-pager-wrapper {
+    position: relative;
+}
+
+.flyer-pager-view {}
+
+.flyer-pager-view>ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.flyer-pager-view>ul>li {
+    float: left;
+    line-height: 34px;
+    color: #666;
+    height: 34px;
+    width: 32px;
+    border: 1px solid #d2d2d2;
+    border-right: 0px;
+    text-align: center;
+    padding: 0px 5px 0px 5px;
+    cursor: pointer;
+    user-select: none;
+    -ms-user-select: none;
+}
+
+.flyer-pager-view>ul>li:first-child {
+    border-radius: 4px 0 0 4px;
+}
+
+.flyer-pager-view>ul>li:last-child {
+    border-radius: 0 4px 4px 0;
+}
+
+.flyer-pager-view>ul>li:hover {
+    background: #e8ecef;
+}
+
+.flyer-pager-view .prev,
+.flyer-pager-view .prev:hover {
+    background: url(../imgs/icon.png);
+    background-position: 0px -54px;
+}
+
+.flyer-pager-view .next,
+.flyer-pager-view .next:hover {
+    background: url(../imgs/icon.png);
+    background-position: -32px -54px;
+}
+
+.flyer-pager-view .next {
+    border-right: 1px solid #d2d2d2;
+}
+
+.flyer-pager-view .active {
+    color: #fff;
+    background: #2cc3a9;
+}
+
+.flyer-pager-view .active:hover {
+    background: #2cc3a9;
+}
+
+.list-page-container .flyer-pager-wrapper {
+    float: right;
+    margin: 12px 22px 12px 0;
+}
+
+.flyer-pager-view .next {
+    border-right: 1px solid #ccc;
+}
+
+.flyer-checkbox-switch {
+    position: relative;
+}
+
+.flyer-checkbox-switch input[type="checkbox"]+i {
+    position: absolute;
+    background-color: #ccc;
+    height: 19px;
+    width: 40px;
+    top: 0px;
+    bottom: 0px;
+    border-radius: 10px;
+    display: inline-block;
+    transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;
+}
+
+.flyer-checkbox-switch input[type="checkbox"] {
+    display: none;
+}
+
+.flyer-checkbox-switch input[type="checkbox"]+i:after {
+    content: "";
+    position: absolute;
+    background-color: #fafafa;
+    height: 17px;
+    width: 18px;
+    border-radius: 8px;
+    left: 1px;
+    top: 1px;
+    transition: .1s;
+}
+
+.flyer-checkbox-switch input[type="checkbox"]:checked+i {
+    background-color: #2cc3a9;
+}
+
+.flyer-checkbox-switch input[type="checkbox"]:checked+i:after {
+    content: "";
+    position: absolute;
+    background-color: #fafafa;
+    left: 21px;
+    top: 1px;
+}
+
+.flyer_msg {
+    top: 20px !important;
+    right: 20px !important;
+    width: auto;
+    left: inherit !important;
+    box-shadow: inherit !important;
+    min-height: 60px;
+    background-color: #000;
+    border: 0px;
+    animation-fill-mode: inherit !important;
+    opacity: .85 !important;
+}
+
+.flyer_msg .flyer-dialog-setwin {
+    position: absolute;
+    min-width: 26px;
+    min-height: 14px;
+    top: -3px;
+    right: 5px;
+    text-align: right;
+    cursor: pointer;
+}
+
+.flyer_msg .flyer-dialog-body {
+    color: #fff !important;
+}
+
+.flyer_msg .flyer-dialog-close{
+    background-position: -83px -40px;
+}
